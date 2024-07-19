@@ -13,58 +13,46 @@
             background: url(assets/img/back.png);
         }
 
-        div {
+        main {
+            max-width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .row div {
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 8rem;
+            flex: 1 1 calc(25% - 1rem); /* 4 items per row with gap */
             height: 8rem;
-            margin: 2rem;
             text-align: center;
             padding: 1rem;
-            flex-grow: 1;
             background-color: #eaebef;
             border-radius: 2rem;
-            -webkit-box-shadow: 10px 10px 69px -20px rgba(0, 0, 0, 0.75);
-            -moz-box-shadow: 10px 10px 69px -20px rgba(0, 0, 0, 0.75);
             box-shadow: 10px 10px 69px -20px rgba(0, 0, 0, 0.75);
-            animation: out;
-            animation-duration: .6s;
+            transition: transform .5s, background-color .5s;
+            box-sizing: border-box;
         }
 
-        div:hover,
-        .selected {
+        .row div:hover,
+        .row div.selected {
             background: #a5a6a8;
-            animation: hover;
-            animation-duration: .2s;
-            transition: .5s;
             transform: scale(1.1);
         }
 
-        @keyframes hover {
-            from {
-                transform: scale(1);
-            }
-            to {
-                transform: scale(1.1);
-            }
-        }
-
-        @keyframes out {
-            from {
-                transform: scale(1.1);
-            }
-            to {
-                transform: scale(1);
-            }
-        }
-
-        main {
-            max-width: 72rem;
-            margin: 0 auto;
-            display: flex;
-            flex-flow: row wrap;
+        .row.full div.selected {
+            background-color: green;
         }
 
         h1 {
@@ -72,91 +60,54 @@
             text-align: center;
             color: #828282;
         }
+
+        /* Popup Styles */
+        .popup {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            padding: 2rem;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .popup.active {
+            display: block;
+        }
+
+        /* Media Queries */
+        @media (max-width: 600px) {
+            .row div {
+                flex: 1 1 calc(25% - 0.5rem); /* Ensure 4 items per row on mobile with smaller gaps */
+            }
+        }
     </style>
 </head>
 
 <body>
     <h1>Gentse Feesten BINGO</h1>
     <main>
-        <div>
-            <p>Cas komt uiteindelijk toch af</p>
+        <div class="row">
+            <div><p>Cas komt uiteindelijk toch af</p></div>
+            <div><p>Steije is hoere dronke</p></div>
+            <div><p>Steije is zijn bril weer kwijt</p></div>
+            <div><p>Thibault is hoere dronke</p></div>
         </div>
-        <div>
-            <p>Steije is hoere dronke</p>
+        <div class="row">
+            <div><p>We veranderen weeral van cafe vo de 100e keer</p></div>
+            <div><p>Extra 1</p></div>
+            <div><p>Extra 2</p></div>
+            <div><p>Extra 3</p></div>
         </div>
-        <div>
-            <p>Steije is zijn bril weer kwijt</p>
-        </div>
-        <div>
-            <p>Thibault is hoere dronke</p>
-        </div>
-        <div>
-            <p>Shazam integrate</p>
-        </div>
-        <div>
-            <p>Swift 5</p>
-        </div>
-        <div>
-            <p>Animoji</p>
-        </div>
-        <div>
-            <p>Goooood morning</p>
-        </div>
-        <div>
-            <p>Sleeptracking</p>
-        </div>
-        <div>
-            <p>Dark mode</p>
-        </div>
-        <div>
-            <p>Workflow</p>
-        </div>
-        <div>
-            <p>The best since...</p>
-        </div>
-        <div>
-            <p>iPhone SE 2</p>
-        </div>
-        <div>
-            <p>Later this year</p>
-        </div>
-        <div>
-            <p>We think you’re going to love it!</p>
-        </div>
-        <div>
-            <p>The best ... yet</p>
-        </div>
-        <div>
-            <p>Both thinner and lighter</p>
-        </div>
-        <div>
-            <p>Mojave</p>
-        </div>
-        <div>
-            <p>Aluminium</p>
-        </div>
-        <div>
-            <p>AirPower</p>
-        </div>
-        <div>
-            <p>First ever</p>
-        </div>
-        <div>
-            <p>Siri</p>
-        </div>
-        <div>
-            <p>Stunning</p>
-        </div>
-        <div>
-            <p>Available Today</p>
-        </div>
-        <div>
-            <p>This morning</p>
-        </div>
-        <div>
-            <p>Craig being funny</p>
-        </div>
+        <!-- Add more rows as needed -->
     </main>
+
+    <div id="popup" class="popup">
+        <p>ZUIPEEEE!</p>
+    </div>
 
     <script src="js/script.js"></script>
 </body>
