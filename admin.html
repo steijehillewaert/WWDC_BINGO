@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin - Edit Bingo Items</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 1rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .item input {
+            flex: 1;
+            padding: 0.5rem;
+            margin-right: 0.5rem;
+        }
+
+        .item button {
+            padding: 0.5rem 1rem;
+        }
+
+        .save-button {
+            display: block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Edit Bingo Items</h1>
+    <div id="admin-board">
+        <div class="item">
+            <input type="text" value="Cas komt uiteindelijk toch af">
+        </div>
+        <div class="item">
+            <input type="text" value="Steije is hoere dronke">
+        </div>
+        <div class="item">
+            <input type="text" value="Steije is zijn bril weer kwijt">
+        </div>
+        <div class="item">
+            <input type="text" value="Thibault is hoere dronke">
+        </div>
+        <div class="item">
+            <input type="text" value="We veranderen weeral van cafe vo de 100e keer">
+        </div>
+        <div class="item">
+            <input type="text" value="Extra 1">
+        </div>
+        <div class="item">
+            <input type="text" value="Extra 2">
+        </div>
+        <div class="item">
+            <input type="text" value="Extra 3">
+        </div>
+        <div class="item">
+            <input type="text" value="Extra 4">
+        </div>
+        <div class="item">
+            <input type="text" value="Extra 5">
+        </div>
+        <div class="item">
+            <input type="text" value="Extra 6">
+        </div>
+        <div class="item">
+            <input type="text" value="Extra 7">
+        </div>
+        <div class="item">
+            <input type="text" value="Extra 8">
+        </div>
+        <div class="item">
+            <input type="text" value="Extra 9">
+        </div>
+        <div class="item">
+            <input type="text" value="Extra 10">
+        </div>
+        <div class="item">
+            <input type="text" value="Extra 11">
+        </div>
+        <button class="save-button" onclick="saveItems()">Save</button>
+    </div>
+
+    <script>
+        function saveItems() {
+            const items = document.querySelectorAll('#admin-board .item input');
+            const bingoItems = Array.from(items).map(item => item.value);
+
+            localStorage.setItem('bingoItems', JSON.stringify(bingoItems));
+
+            alert('Items saved!');
+            window.location.href = 'index.html'; // Redirect to index.html after saving
+        }
+
+        function loadItems() {
+            const savedItems = JSON.parse(localStorage.getItem('bingoItems'));
+            if (savedItems) {
+                const items = document.querySelectorAll('#admin-board .item input');
+                items.forEach((item, index) => {
+                    if (savedItems[index]) {
+                        item.value = savedItems[index];
+                    }
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadItems);
+    </script>
+</body>
+
+</html>

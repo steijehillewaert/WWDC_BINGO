@@ -35,6 +35,7 @@
             justify-content: center;
             align-items: center;
             flex: 1 1 calc(25% - 1rem); /* 4 items per row with gap */
+            min-width: calc(25% - 1rem); /* Ensure minimum width to maintain 4 items per row */
             height: 8rem;
             text-align: center;
             padding: 1rem;
@@ -43,6 +44,11 @@
             box-shadow: 10px 10px 69px -20px rgba(0, 0, 0, 0.75);
             transition: transform .5s, background-color .5s;
             box-sizing: border-box;
+            margin-right: 0.5rem; /* Horizontal margin */
+        }
+
+        .row div:last-child {
+            margin-right: 0; /* Remove margin for the last item in the row */
         }
 
         .row div:hover,
@@ -51,14 +57,23 @@
             transform: scale(1.1);
         }
 
-        .row.full div.selected {
-            background-color: green;
-        }
-
         h1 {
             font-size: 3rem;
             text-align: center;
             color: #828282;
+        }
+
+        .admin-button {
+            display: block;
+            margin: 1rem auto;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            text-align: center;
         }
 
         /* Popup Styles */
@@ -79,9 +94,10 @@
         }
 
         /* Media Queries */
-        @media (max-width: 600px) {
+        @media (max-width: 300px) {
             .row div {
-                flex: 1 1 calc(25% - 0.5rem); /* Ensure 4 items per row on mobile with smaller gaps */
+                flex: 1 1 25%; /* Maintain 4 items per row even on very small screens */
+                min-width: 25%; /* Ensure minimum width to maintain 4 items per row */
             }
         }
     </style>
@@ -89,9 +105,10 @@
 
 <body>
     <h1>Gentse Feesten BINGO</h1>
-    <main>
+    <button class="admin-button" onclick="window.location.href='admin.html'">Admin</button>
+    <main id="bingo-board">
         <div class="row">
-            <div><p>Cas komt uiteindelijk toch af</p></div>
+            <div><p>item 1</p></div>
             <div><p>Steije is hoere dronke</p></div>
             <div><p>Steije is zijn bril weer kwijt</p></div>
             <div><p>Thibault is hoere dronke</p></div>
@@ -102,11 +119,22 @@
             <div><p>Extra 2</p></div>
             <div><p>Extra 3</p></div>
         </div>
-        <!-- Add more rows as needed -->
+        <div class="row">
+            <div><p>Extra 4</p></div>
+            <div><p>Extra 5</p></div>
+            <div><p>Extra 6</p></div>
+            <div><p>Extra 7</p></div>
+        </div>
+        <div class="row">
+            <div><p>Extra 8</p></div>
+            <div><p>Extra 9</p></div>
+            <div><p>Extra 10</p></div>
+            <div><p>Extra 11</p></div>
+        </div>
     </main>
 
     <div id="popup" class="popup">
-        <p>ZUIPEEEE!</p>
+        <p>BINGO! You have a full row, column, or diagonal!</p>
     </div>
 
     <script src="js/script.js"></script>

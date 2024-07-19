@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     const init = () => {
+        loadItems();
         const $rows = document.querySelectorAll('.row');
 
         $rows.forEach(($row, rowIndex) => {
@@ -16,6 +17,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
         checkAllRows();
         checkAllColumns();
+        checkDiagonals();
+    }
+
+    const loadItems = () => {
+        const savedItems = JSON.parse(localStorage.getItem('bingoItems'));
+        if (savedItems) {
+            const $rows = document.querySelectorAll('.row');
+            $rows.forEach(($row, rowIndex) => {
+                const $divs = $row.querySelectorAll('div');
+                $divs.forEach(($div, divIndex) => {
+                    const p = $div.querySelector('p');
+                    if (savedItems[rowIndex * 4 + divIndex]) {
+                        p.textContent = savedItems[rowIndex * 4 + divIndex];
+                    }
+                });
+            });
+        }
     }
 
     const handleClickItem = e => {
@@ -35,16 +53,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
         checkRow($row);
         checkAllColumns();
+        checkDiagonals();
     }
 
     const checkRow = ($row) => {
         const $divs = $row.querySelectorAll('div');
         const allSelected = Array.from($divs).every($div => $div.classList.contains('selected'));
         if (allSelected) {
-            $divs.forEach($div => $div.classList.add('full'));
-            showPopup();
-        } else {
-            $divs.forEach($div => $div.classList.remove('full'));
+            showPopup('row');
         }
     }
 
@@ -61,20 +77,43 @@ document.addEventListener('DOMContentLoaded', (event) => {
             const $columnDivs = Array.from($rows).map($row => $row.children[colIndex]);
             const allSelected = $columnDivs.every($div => $div.classList.contains('selected'));
             if (allSelected) {
-                $columnDivs.forEach($div => $div.classList.add('full'));
-                showPopup();
-            } else {
-                $columnDivs.forEach($div => $div.classList.remove('full'));
+                showPopup('column');
             }
         }
     }
 
-    const showPopup = () => {
+    const checkDiagonals = () => {
+        const $rows = document.querySelectorAll('.row');
+        const rowCount = $rows.length;
+        const colCount = $rows[0].children.length;
+
+        let leftToRightDiagonal = [];
+        let rightToLeftDiagonal = [];
+
+        for (let i = 0; i < rowCount; i++) {
+            leftToRightDiagonal.push($rows[i].children[i]);
+            rightToLeftDiagonal.push($rows[i].children[colCount - i - 1]);
+        }
+
+        const leftToRightAllSelected = leftToRightDiagonal.every($div => $div.classList.contains('selected'));
+        const rightToLeftAllSelected = rightToLeftDiagonal.every($div => $div.classList.contains('selected'));
+
+        if (leftToRightAllSelected) {
+            showPopup('left-to-right diagonal');
+        }
+
+        if (rightToLeftAllSelected) {
+            showPopup('right-to-left diagonal');
+        }
+    }
+
+    const showPopup = (type) => {
         const $popup = document.getElementById('popup');
+        $popup.innerHTML = `<p>BINGO! You have a full ${type}!</p>`;
         $popup.classList.add('active');
         setTimeout(() => {
             $popup.classList.remove('active');
-        }, 1000); // Change timeout to 2 seconds
+        }, 2000); // Popup duration is 2 seconds
     }
 
     init();
